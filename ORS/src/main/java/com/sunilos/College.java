@@ -1,4 +1,4 @@
-package com.sunilos.ctl;
+package com.sunilos;
 
 public class College {
 
@@ -7,7 +7,6 @@ public class College {
 	private String address = null;
 
 	public College() {
-
 	}
 
 	public College(long id, String name, String address) {

@@ -1,4 +1,4 @@
-package com.sunilos.ctl;
+package com.sunilos;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,11 +25,9 @@ public class CollegeCtl {
 	@GetMapping("get/{id}")
 	public Map<String, Object> get(@PathVariable Long id) {
 
-		System.out.println("ID: " + id);
+		College c = data.get(id);
 
 		Map<String, Object> response = new HashMap<String, Object>();
-
-		College c = data.get(id);
 
 		if (c != null) {
 			response.put("success", true);
@@ -42,34 +40,12 @@ public class CollegeCtl {
 		return response;
 	}
 
-	@PostMapping("save")
-	public Map<String, Object> save(@RequestBody College c) {
-
-		Map<String, Object> response = new HashMap<String, Object>();
-
-		Long id = c.getId();
-		
-		System.out.println("Received ID " + id);
-		
-		if (id > 0) {
-			data.remove(id);
-			data.put(id, c);
-		} else {
-			c.setId(data.size()+1);
-			data.put(id, c);
-		}
-		response.put("success", true);
-		response.put("message", "Data is saved");
-		response.put("data", c);
-		return response;
-	}
-
 	@GetMapping("delete/{id}")
 	public Map<String, Object> delete(@PathVariable Long id) {
 
-		Map<String, Object> response = new HashMap<String, Object>();
-
 		College c = data.get(id);
+
+		Map<String, Object> response = new HashMap<String, Object>();
 
 		if (c == null) {
 			response.put("success", false);
@@ -79,6 +55,26 @@ public class CollegeCtl {
 			response.put("success", true);
 			response.put("data", c);
 		}
+		return response;
+	}
+
+	@PostMapping("save")
+	public Map<String, Object> save(@RequestBody College c) {
+
+		Long id = c.getId();
+
+		Map<String, Object> response = new HashMap<String, Object>();
+
+		if (id > 0) {
+			data.remove(id);
+			data.put(id, c);
+		} else {
+			c.setId(data.size() + 1);
+			data.put(id, c);
+		}
+		response.put("success", true);
+		response.put("message", "Data is saved");
+		response.put("data", c);
 		return response;
 	}
 
